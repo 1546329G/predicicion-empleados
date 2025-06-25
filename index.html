@@ -3,309 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predicción de Rotación de Empleados</title>
+    <title>Predicción de Rotación Simplificada</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 700px;
-            margin: 30px auto;
-            padding: 25px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-        }
-        h1, h2 {
-            color: #0056b3;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        @media (min-width: 600px) {
-            .form-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        .form-group {
-            margin-bottom: 0;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="number"],
-        select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-top: 2px;
-            font-size: 1em;
-        }
-        .radio-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 5px;
-        }
-        .radio-group input[type="radio"] {
-            margin-right: 5px;
-        }
-        .radio-group label {
-            display: inline-block;
-            margin-bottom: 0;
-            font-weight: normal;
-        }
-        button {
-            grid-column: 1 / -1;
-            width: 100%;
-            padding: 12px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 25px;
-        }
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
-        button:active {
-            transform: translateY(0);
-        }
-        .result-section {
-            margin-top: 30px;
-            padding: 20px;
-            border: 2px solid #007bff;
-            border-radius: 8px;
-            text-align: center;
-            background-color: #e7f3ff;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .result-section p {
-            margin: 5px 0;
-            font-size: 1.15em;
-            font-weight: bold;
-        }
-        .result-section #probability {
-            font-size: 1.8em;
-            color: #d63384;
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-        .note {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 500px; margin: 30px auto; padding: 25px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); }
+        h1, h2 { color: #0056b3; text-align: center; margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input[type="number"], select { width: calc(100% - 22px); padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .radio-group { display: flex; align-items: center; gap: 15px; margin-top: 5px; }
+        button { width: 100%; padding: 12px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; margin-top: 20px; }
+        button:hover { background-color: #0056b3; }
+        .result-section { margin-top: 30px; padding: 20px; border: 2px solid #007bff; border-radius: 8px; text-align: center; background-color: #e7f3ff; }
+        .result-section #probability { font-size: 1.8em; color: #d63384; font-weight: bold; display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Predicción de Rotación de Empleados</h1>
-        <p class="note">Completa el formulario con los datos del empleado para predecir si dejará la empresa.</p>
+        <h1>Predicción de Rotación (Simplificada)</h1>
+        <p class="note">Ingresa datos básicos para una predicción rápida.</p>
 
         <form id="predictionForm">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="age">Edad:</label>
-                    <input type="number" id="age" min="18" max="65" value="30" required>
-                </div>
+            <div class="form-group">
+                <label for="age">Edad:</label>
+                <input type="number" id="age" min="18" max="65" value="30" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="monthlyIncome">Ingreso mensual:</label>
-                    <input type="number" id="monthlyIncome" min="1000" value="5000" required>
-                </div>
+            <div class="form-group">
+                <label for="monthlyIncome">Ingreso mensual:</label>
+                <input type="number" id="monthlyIncome" min="1000" value="5000" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="jobRole">Puesto de trabajo:</label>
-                    <select id="jobRole" required>
-                        <option value="Sales Executive">Ejecutivo de ventas</option>
-                        <option value="Research Scientist">Científico investigador</option>
-                        <option value="Laboratory Technician">Técnico de laboratorio</option>
-                        <option value="Manufacturing Director">Director de producción</option>
-                        <option value="Healthcare Representative">Representante de salud</option>
-                        <option value="Manager">Gerente</option>
-                        <option value="Sales Representative">Representante de ventas</option>
-                        <option value="Research Director">Director de investigación</option>
-                        <option value="Human Resources">Recursos humanos</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="jobRole">Puesto de trabajo:</label>
+                <select id="jobRole" required>
+                    <option value="Sales Executive">Ejecutivo de ventas</option>
+                    <option value="Research Scientist">Científico investigador</option>
+                    <option value="Laboratory Technician">Técnico de laboratorio</option>
+                    <option value="Manager">Gerente</option>
+                    <option value="Human Resources">Recursos humanos</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label for="totalWorkingYears">Años totales de experiencia:</label>
-                    <input type="number" id="totalWorkingYears" min="0" max="40" value="10" required>
-                </div>
+            <div class="form-group">
+                <label for="totalWorkingYears">Años de experiencia total:</label>
+                <input type="number" id="totalWorkingYears" min="0" max="40" value="10" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="yearsAtCompany">Años en la empresa actual:</label>
-                    <input type="number" id="yearsAtCompany" min="0" max="40" value="5" required>
-                </div>
+            <div class="form-group">
+                <label for="yearsAtCompany">Años en la empresa actual:</label>
+                <input type="number" id="yearsAtCompany" min="0" max="40" value="5" required>
+            </div>
 
-                <div class="form-group">
-                    <label>¿Hace horas extra?</label>
-                    <div class="radio-group">
-                        <input type="radio" id="overTimeYes" name="overTime" value="Yes" checked>
-                        <label for="overTimeYes">Sí</label>
-                        <input type="radio" id="overTimeNo" name="overTime" value="No">
-                        <label for="overTimeNo">No</label>
-                    </div>
+            <div class="form-group">
+                <label>¿Hace horas extra?</label>
+                <div class="radio-group">
+                    <input type="radio" id="overTimeYes" name="overTime" value="Yes" checked>
+                    <label for="overTimeYes">Sí</label>
+                    <input type="radio" id="overTimeNo" name="overTime" value="No">
+                    <label for="overTimeNo">No</label>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="businessTravel">¿Viaja por trabajo?</label>
-                    <select id="businessTravel" required>
-                        <option value="Travel_Rarely">Viaja rara vez</option>
-                        <option value="Travel_Frequently">Viaja con frecuencia</option>
-                        <option value="Non-Travel">No viaja</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="gender">Género:</label>
+                <select id="gender" required>
+                    <option value="Female">Femenino</option>
+                    <option value="Male">Masculino</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label for="dailyRate">Tarifa diaria:</label>
-                    <input type="number" id="dailyRate" min="100" max="1500" value="800" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="distanceFromHome">Distancia desde casa:</label>
-                    <input type="number" id="distanceFromHome" min="1" max="29" value="10" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="education">Nivel educativo (1-5):</label>
-                    <input type="number" id="education" min="1" max="5" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="educationField">Campo educativo:</label>
-                    <select id="educationField" required>
-                        <option value="Life Sciences">Ciencias de la vida</option>
-                        <option value="Medical">Medicina</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Technical Degree">Carrera técnica</option>
-                        <option value="Other">Otro</option>
-                        <option value="Human Resources">Recursos humanos</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="gender">Género:</label>
-                    <select id="gender" required>
-                        <option value="Female">Femenino</option>
-                        <option value="Male">Masculino</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="maritalStatus">Estado civil:</label>
-                    <select id="maritalStatus" required>
-                        <option value="Married">Casado(a)</option>
-                        <option value="Single">Soltero(a)</option>
-                        <option value="Divorced">Divorciado(a)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="employeeNumber">Número de empleado:</label>
-                    <input type="number" id="employeeNumber" min="1" value="1000" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="environmentSatisfaction">Satisfacción con el ambiente (1-4):</label>
-                    <input type="number" id="environmentSatisfaction" min="1" max="4" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="hourlyRate">Tarifa por hora:</label>
-                    <input type="number" id="hourlyRate" min="30" max="100" value="60" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="jobInvolvement">Compromiso con el trabajo (1-4):</label>
-                    <input type="number" id="jobInvolvement" min="1" max="4" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="jobLevel">Nivel del puesto:</label>
-                    <input type="number" id="jobLevel" min="1" max="5" value="2" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="jobSatisfaction">Satisfacción laboral (1-4):</label>
-                    <input type="number" id="jobSatisfaction" min="1" max="4" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="monthlyRate">Tarifa mensual:</label>
-                    <input type="number" id="monthlyRate" min="2000" max="27000" value="14000" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="numCompaniesWorked">Empresas anteriores:</label>
-                    <input type="number" id="numCompaniesWorked" min="0" max="9" value="2" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="percentSalaryHike">Porcentaje de aumento salarial:</label>
-                    <input type="number" id="percentSalaryHike" min="11" max="25" value="15" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="performanceRating">Calificación de desempeño (1-4):</label>
-                    <input type="number" id="performanceRating" min="1" max="4" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="relationshipSatisfaction">Satisfacción con relaciones (1-4):</label>
-                    <input type="number" id="relationshipSatisfaction" min="1" max="4" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="stockOptionLevel">Nivel de opciones de acciones:</label>
-                    <input type="number" id="stockOptionLevel" min="0" max="3" value="1" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="trainingTimesLastYear">Entrenamientos en el último año:</label>
-                    <input type="number" id="trainingTimesLastYear" min="0" max="6" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="workLifeBalance">Equilibrio vida/trabajo (1-4):</label>
-                    <input type="number" id="workLifeBalance" min="1" max="4" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="yearsInCurrentRole">Años en el puesto actual:</label>
-                    <input type="number" id="yearsInCurrentRole" min="0" max="18" value="3" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="yearsSinceLastPromotion">Años desde el último ascenso:</label>
-                    <input type="number" id="yearsSinceLastPromotion" min="0" max="15" value="1" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="yearsWithCurrManager">Años con el gerente actual:</label>
-                    <input type="number" id="yearsWithCurrManager" min="0" max="17" value="2" required>
-                </div>
+            <div class="form-group">
+                <label for="jobSatisfaction">Satisfacción laboral (1-4):</label>
+                <input type="number" id="jobSatisfaction" min="1" max="4" value="3" required>
             </div>
 
             <button type="button" id="predictBtn">¿Está en riesgo de rotación?</button>
@@ -318,7 +88,6 @@
         </div>
     </div>
 
-    <!-- TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="script.js"></script>
 </body>
